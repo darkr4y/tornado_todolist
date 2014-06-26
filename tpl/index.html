@@ -1,0 +1,185 @@
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>{{page_title}}</title>
+
+    <!-- Framework CSS -->
+    <link rel="stylesheet" href="{{ static_url("css/blueprint/screen.css") }}">
+    <!--[if lt IE 8]><link rel="stylesheet" href="{{ static_url("css/blueprint/ie.css") }}" type="text/css" media="screen, projection"><![endif]-->
+    <style type="text/css" media="screen">
+      p, table, hr, .box { margin-bottom:25px; }
+      .box p { margin-bottom:10px; }
+      #addinput {width: 600px;}
+      #updateinput {width: 600px;}
+    </style>
+    <script src="http://ajax.microsoft.com/ajax/jquery/jquery-1.9.1.js"></script>
+  </head>
+  <body>
+    <script>
+    $(document).ready(function(){ 
+      //done button
+      $("[id=done]").each(function(){ 
+	$(this).click(function(){ 
+	  //code here
+	  var id = $(this).parent().children('input#todo_id').val();
+	  $.post("done",
+	  {
+	    tid:id,
+	  },
+	  function(data,status){
+	    //alert("Data: " + data + "\nStatus: " + status);
+	    if (status == 'success')
+	    {
+	      window.location.reload()
+	    }
+	  });
+	}); 
+      });
+      
+      //undone button
+      $("[id=undone]").each(function(){ 
+	$(this).click(function(){ 
+	  //code here
+	  var id = $(this).parent().children('input#todo_id').val();
+	  $.post("undone",
+	  {
+	    tid:id,
+	  },
+	  function(data,status){
+	    //alert("Data: " + data + "\nStatus: " + status);
+	    if (status == 'success')
+	    {
+	      window.location.reload()
+	    }
+	  });
+	}); 
+      });
+      
+      //del button
+      $("[id=del]").each(function(){ 
+	$(this).click(function(){ 
+	  //code here
+	  var id = $(this).parent().children('input#todo_id').val();
+	  $.post("del",
+	  {
+	    tid:id,
+	  },
+	  function(data,status){
+	    if (status == 'success')
+	    {
+	      window.location.reload()
+	    }else{
+	      alert("Data: " + data + "\nStatus: " + status);
+	    }
+	  });
+	}); 
+      });
+      
+      //update button
+      $("[id=update]").each(function(){ 
+	$(this).click(function(){ 
+	  //code here
+	  var id = $(this).parent().children('input#todo_id').val();
+	  $('#update_id').val(id);
+	  var content = $(this).parents('tr').children('td').eq(1).html();
+	  $('#updateinput').val(content);
+	  $('#update_div').fadeIn();
+	  $('#update_div').fadeIn('slow');
+	  $('#update_div').fadeIn(3000);
+	}); 
+      });
+      
+      $('#add').click(function(){
+	var content = $('#addinput').val();
+	$.post("add",
+	  {
+	    addinput:content,
+	  },
+	  function(data,status){
+	    if (status == 'success'){
+	      window.location.reload();
+	    }else{
+	      alert("Data: " + data + "\nStatus: " + status);
+	    }
+	  });
+      });
+      
+      //close update div
+      $('#close_div').click(function(){
+	$('#update_div').fadeOut();
+	$('#update_div').fadeOut('slow');
+	$('#update_div').fadeOut(3000);
+      });
+      
+      //updateconfirm button
+      $('#updateconfirm').click(function(){
+	//var content = $(this).siblings('input#updateinput').val()
+	var id = $('#update_id').val();
+	var content = $('#updateinput').val();
+	$.post("update",
+	{
+	  tid:id,
+	  updateinput:content
+	},
+	function(data,status){
+	  if (status == 'success'){
+	    window.location.reload();
+	  }else{
+	    alert("Data: " + data + "\nStatus: " + status);
+	  }
+	});
+      });
+      
+      
+      
+    });//end 
+    </script>
+
+    <div class="container">
+      <br> 	
+      <h1>{{header_title}}</h1>
+      <hr>
+      <p>基于tonardo构建的简单todo应用，使用blueprint的css框架，以文本文件作为存储，学习tonardo的练习之作。 --- {{coder}}</p>
+
+      <table border="0" cellspacing="0" cellpadding="0">
+      	<thead>
+	        <tr>
+  	        <th class="span-2">Time</th>
+    	    	<th class="span-16">Description</th>
+      	  	<th class="span-4">Operation</th>
+        	</tr>
+        </thead>
+        <tbody>
+	{% for item in items %}
+	{% module Item(item) %}
+	{% end %}
+	</tbody>
+      </table>
+
+      <hr>
+
+      <div class="box">
+        <p>
+	  <label for="addinput">Add Todo</label><br>
+	  <input type="text" class="text" id="addinput" name="addinput" value="Things to do ....">
+	  <input type="submit" id="add" value="Add" class="button">
+	</p>
+      </div>
+
+      <div id="update_div" style="display:none;" class="box">
+	<p>
+	  <input type="hidden" id="update_id" name="update_id" value="" />
+	  <label for="addinput">Update Todo</label><br>     
+	  <input id="updateinput" class="text" name="updateinput" type="text" value="" />
+	  <input id="updateconfirm" type="button" value="submit" />
+	  <input id="close_div" type="button" value="close" />
+	</p>
+      </div>
+ 
+    <hr>
+      <p><em><strong>versions:</strong></em> 0.1</p>
+    </div>
+    
+    
+  </body>
+</html>

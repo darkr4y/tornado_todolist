@@ -1,0 +1,22 @@
+<tr>
+ <td>{{ todo_item[0] }}</td>
+ <td>
+  {% if (todo_item[2] == '0') %}
+   {{ todo_item[1] }} 
+  {% else %}
+   <del>{{ todo_item[1] }}</del> 
+  {% end %}
+ </td>
+ <td>
+  <input type="hidden" id="todo_id" name="todo_id" value="{{ todo_id}}" />
+  <input type="hidden" id="todo_status" name="todo_status" value="{{ todo_item[2] }}" />
+  
+  {% if (todo_item[2] == '0') %}
+  <input type="button" id="done" value="done" /> 
+  {% else %}
+  <input type="button" id="undone" value="undo" /> 
+  {% end %}
+  <input type="button" id="update" value="update" /> 
+  <input type="button" id="del" value="del" /> 
+ </td>
+</tr>

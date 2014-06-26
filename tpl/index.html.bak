@@ -1,0 +1,68 @@
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>{{page_title}}}</title>
+
+    <!-- Framework CSS -->
+  	<!--
+    <link rel="stylesheet" href="../blueprint/screen.css" type="text/css" media="screen, projection">
+    <link rel="stylesheet" href="../blueprint/print.css" type="text/css" media="print">
+    -->
+    <link rel="stylesheet" href="{{ static_url("css/blueprint/screen.css") }}">
+    <!--[if lt IE 8]><link rel="stylesheet" href="{{ static_url("css/blueprint/ie.css") }}" type="text/css" media="screen, projection"><![endif]-->
+    <style type="text/css" media="screen">
+      p, table, hr, .box { margin-bottom:25px; }
+      .box p { margin-bottom:10px; }
+      #addinput {width: 600px;}
+    </style>
+  </head>
+  <body>
+
+    <div class="container">
+      <br> 	
+      <h1>{{header_title}}</h1>
+      <hr>
+      <p>基于tonardo构建的简单todo应用，使用blueprint的css框架，以文本文件作为存储，学习tonardo的练习之作。 --- {{coder}}</p>
+
+      <table border="0" cellspacing="0" cellpadding="0">
+      	<thead>
+	        <tr>
+  	        <th class="span-6">Time</th>
+    	    	<th class="span-14">Description</th>
+      	  	<th class="span-4">Operation</th>
+        	</tr>
+        </thead>
+        <tbody>
+					<tr>
+						<td>2014-xx-xx xx:xx</td>
+						<td>
+							Tests classes provided by grid.css.
+						</td>
+						<td>done | update | delete</td>
+					</tr>
+					<tr class="even">
+						<td>2014-xx-xx xx:xx</td>
+						<td>
+							A simple sample page, with common elements.
+						</td>
+						<td>undo | update | delete</td>
+					</tr>
+				</tbody>
+      </table>
+
+      <hr>
+
+      <div class="box">
+        <p>
+        	  <form action="/add" method="post" class="">
+              <label for="addinput">Add Todo</label><br>
+              <input type="text" class="text" id="addinput" name="addinput" value="Things to do ....">
+              <input type="submit" value="Add" class="button">
+              </form>
+        </p>
+      </div>
+      <hr>
+      <p><em><strong>versions:</strong></em> 0.1</p>
+    </div>
+  </body>
+</html>
